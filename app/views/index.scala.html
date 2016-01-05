@@ -1,7 +1,24 @@
-@(message: String)
+@import model.User
+@(userForm: Form[(String, String)], users: Seq[User])
 
-@main("Welcome to Play") {
+@main("play-slick sample") {
+    <h2>Insert user:</h2>
 
-    @play20.welcome(message)
+    <form action="@routes.Application.create()" method="POST">
+        <input name="name" type="text" placeholder="user name"/>
+        <input name="mail" type="text" placeholder="mail address"/>
+        <input type="submit"/>
+    </form>
 
+    <h2>All users:</h2>
+    <table>
+        <tr>
+            <th>ID</th><th>Name</th><th>Mail</th>
+        </tr>
+        @users.map { user =>
+            <tr>
+                <td>@user.id.get</td><td>@user.name</td><td>@user.mail</td>
+            </tr>
+        }
+    </table>
 }
