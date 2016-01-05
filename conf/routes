@@ -8,6 +8,7 @@ GET         /users/add             controllers.Application.add
 GET         /users/:id/edit        controllers.Application.edit(id: Long)
 POST        /users/create          controllers.Application.create
 POST        /users/update          controllers.Application.update
+POST        /users/:id/destroy     controllers.Application.destroy(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)

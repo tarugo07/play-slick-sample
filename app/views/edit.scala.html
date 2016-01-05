@@ -16,6 +16,9 @@
         <input type="text" disabled value="@form("id").value"><br>
         <input name="name" type="text" value="@form("name").value" placeholder="user name"/>@errors(form("name"))<br>
         <input name="mail" type="text" value="@form("mail").value" placeholder="mail address"/>@errors(form("mail"))<br>
-        <input type="submit"/>
+        <input type="submit" value="更新"/>
+    </form>
+    <form action="@routes.Application.destroy(form.get.id.get)" method="POST">
+        <input type="submit" value="削除"/>
     </form>
 }

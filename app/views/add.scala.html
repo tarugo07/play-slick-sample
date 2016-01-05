@@ -14,6 +14,6 @@
     <form action="@routes.Application.create()" method="POST">
         <input name="name" type="text" value="@form("name").value" placeholder="user name"/>@errors(form("name"))<br>
         <input name="mail" type="text" value="@form("mail").value" placeholder="mail address"/>@errors(form("mail"))<br>
-        <input type="submit"/>
+        <input type="submit" value="追加"/>
     </form>
 }

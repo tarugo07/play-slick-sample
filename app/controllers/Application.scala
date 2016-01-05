@@ -68,4 +68,8 @@ class Application @Inject()(val messagesApi: MessagesApi)
     )
   }
 
+  def destroy(id: Long) = Action.async { implicit request =>
+    userDao.delete(id).map(_ => Redirect(routes.Application.index()))
+  }
+
 }
