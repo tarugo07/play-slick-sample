@@ -25,10 +25,11 @@ class Application @Inject()(val messagesApi: MessagesApi)
   val userDao = new UserDao(dbConfig)
 
   val form = Form(
-    tuple(
+    mapping(
+      "id" -> optional(longNumber),
       "name" -> nonEmptyText,
       "mail" -> email
-    )
+    )(User.apply)(User.unapply)
   )
 
   def index = Action.async { implicit request =>
@@ -41,14 +42,29 @@ class Application @Inject()(val messagesApi: MessagesApi)
     Ok(views.html.add(form))
   }
 
+  def edit(id: Long) = Action.async { implicit request =>
+    userDao.findById(id).map { userOpt =>
+      userOpt.map { user =>
+        Ok(views.html.edit(form.fill(user)))
+      }.getOrElse(NotFound)
+    }
+  }
+
   def create = Action.async { implicit request =>
     form.bindFromRequest.fold(
       errors =>
         Future.successful(BadRequest(views.html.add(errors))),
-      input => {
-        val user = User(id = None, name = input._1, mail = input._2)
-        userDao.insert(user).map(_ => Redirect(routes.Application.index))
-      }
+      user =>
+        userDao.insert(user).map(_ => Redirect(routes.Application.index()))
+    )
+  }
+
+  def update = Action.async { implicit request =>
+    form.bindFromRequest.fold(
+      errors =>
+        Future.successful(BadRequest(views.html.edit(errors))),
+      user =>
+        userDao.update(user).map(_ => Redirect(routes.Application.index()))
     )
   }
 

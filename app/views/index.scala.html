@@ -6,11 +6,17 @@
     <a href="@routes.Application.add()">新規追加</a>
     <table>
         <tr>
-            <th>ID</th><th>Name</th><th>Mail</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Mail</th>
+            <th>Edit</th>
         </tr>
         @users.map { user =>
             <tr>
-                <td>@user.id.get</td><td>@user.name</td><td>@user.mail</td>
+                <td>@user.id.get</td>
+                <td>@user.name</td>
+                <td>@user.mail</td>
+                <td><a href="@routes.Application.edit(user.id.get)">編集</a></td>
             </tr>
         }
     </table>
