@@ -1,0 +1,18 @@
+@(form: Form[(String, String)])(implicit messages: Messages)
+
+@errors(field: Field) = {
+  @if(field.hasErrors) {
+    @field.errors.map { e =>
+        @Messages(e.messages, e.args: _*)
+    }.mkString(", ")
+  }
+}
+
+@main("play-slick sample") {
+    <h2>Create user:</h2>
+    <form action="@routes.Application.create()" method="POST">
+        <input name="name" type="text" value="@form("name").value" placeholder="user name"/>@errors(form("name"))<br>
+        <input name="mail" type="text" value="@form("mail").value" placeholder="mail address"/>@errors(form("mail"))<br>
+        <input type="submit"/>
+    </form>
+}
